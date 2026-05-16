@@ -297,7 +297,7 @@ class RepositorySummarizationPipeline:
         
         # Create a hash based on key repository attributes
         key_data = f"{repo_data.name}_{repo_data.total_files}_{repo_data.total_loc}"
-        return hashlib.md5(key_data.encode()).hexdigest()
+        return hashlib.md5(key_data.encode(), usedforsecurity=False).hexdigest()
     
     def format_output(
         self,

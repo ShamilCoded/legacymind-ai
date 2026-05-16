@@ -8,6 +8,7 @@ from langchain_core.messages import HumanMessage, AIMessage, SystemMessage
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_openai import ChatOpenAI
 from langchain_anthropic import ChatAnthropic
+from langchain_google_genai import ChatGoogleGenerativeAI
 
 from .memory import ConversationMemory
 from .code_analyzer import CodeAnalyzer
@@ -37,8 +38,8 @@ class RAGChatbot:
         self,
         embedding_service: EmbeddingService,
         vector_store: VectorStore,
-        llm_provider: str = "openai",
-        model_name: str = "gpt-4-turbo-preview",
+        llm_provider: str = "gemini",
+        model_name: str = "gemini-1.5-flash",
         api_key: Optional[str] = None,
         temperature: float = 0.7,
         max_tokens: int = 2000
@@ -49,7 +50,7 @@ class RAGChatbot:
         Args:
             embedding_service: Service for generating embeddings
             vector_store: Vector store for retrieval
-            llm_provider: LLM provider ('openai' or 'anthropic')
+            llm_provider: LLM provider ('openai', 'anthropic', or 'gemini')
             model_name: Model name
             api_key: API key for LLM provider
             temperature: Temperature for generation
@@ -57,7 +58,7 @@ class RAGChatbot:
         """
         self.embedding_service = embedding_service
         self.vector_store = vector_store
-        self.retriever = SemanticRetriever(embedding_service, vector_store)
+        self.retriever = SemanticRetriever(embedding_service=embedding_service, vector_store=vector_store)
         self.code_analyzer = CodeAnalyzer()
         
         # Initialize LLM
@@ -74,6 +75,16 @@ class RAGChatbot:
                 api_key=api_key,
                 temperature=temperature,
                 max_tokens=max_tokens
+            )
+        elif llm_provider == "gemini":
+            import os
+            if api_key:
+                os.environ["GOOGLE_API_KEY"] = api_key
+            self.llm = ChatGoogleGenerativeAI(
+                model=model_name,
+                google_api_key=api_key,
+                temperature=temperature,
+                max_output_tokens=max_tokens
             )
         else:
             raise ValueError(f"Unknown LLM provider: {llm_provider}")
