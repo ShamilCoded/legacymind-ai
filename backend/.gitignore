@@ -73,7 +73,7 @@ db.sqlite3
 # Vector stores and AI models
 *.faiss
 *.index
-embeddings/
+# embeddings/
 vector_stores/
 models/
 .transformers/
