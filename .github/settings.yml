@@ -1,0 +1,252 @@
+# GitHub Repository Settings
+# This file can be used with the Probot Settings app to configure repository settings
+# https://github.com/probot/settings
+
+repository:
+  name: legacymind-ai
+  description: AI-powered legacy code modernization platform with intelligent analysis and migration tools
+  homepage: https://legacymind.ai
+  topics:
+    - ai
+    - legacy-code
+    - modernization
+    - code-analysis
+    - rag
+    - embeddings
+    - nextjs
+    - fastapi
+    - typescript
+    - python
+  private: false
+  has_issues: true
+  has_projects: true
+  has_wiki: true
+  has_downloads: true
+  default_branch: main
+  allow_squash_merge: true
+  allow_merge_commit: true
+  allow_rebase_merge: false
+  delete_branch_on_merge: true
+  enable_automated_security_fixes: true
+  enable_vulnerability_alerts: true
+
+# Branch Protection Rules
+branches:
+  - name: main
+    protection:
+      required_pull_request_reviews:
+        required_approving_review_count: 2
+        dismiss_stale_reviews: true
+        require_code_owner_reviews: true
+        dismissal_restrictions:
+          users: []
+          teams: []
+      required_status_checks:
+        strict: true
+        contexts:
+          - "Frontend CI / lint"
+          - "Frontend CI / test"
+          - "Frontend CI / build"
+          - "Backend CI / lint"
+          - "Backend CI / test"
+          - "Backend CI / build"
+          - "Backend CI / security"
+      enforce_admins: true
+      required_linear_history: true
+      allow_force_pushes: false
+      allow_deletions: false
+      required_conversation_resolution: true
+      restrictions:
+        users: []
+        teams:
+          - release-managers
+        apps: []
+
+  - name: develop
+    protection:
+      required_pull_request_reviews:
+        required_approving_review_count: 1
+        dismiss_stale_reviews: true
+        require_code_owner_reviews: false
+      required_status_checks:
+        strict: true
+        contexts:
+          - "Frontend CI / lint"
+          - "Frontend CI / test"
+          - "Backend CI / lint"
+          - "Backend CI / test"
+      enforce_admins: false
+      required_linear_history: false
+      allow_force_pushes: false
+      allow_deletions: false
+      required_conversation_resolution: true
+
+# Labels for Issues and Pull Requests
+labels:
+  # Type Labels
+  - name: "type: feature"
+    color: "0e8a16"
+    description: "New feature or enhancement"
+  
+  - name: "type: bug"
+    color: "d73a4a"
+    description: "Something isn't working"
+  
+  - name: "type: documentation"
+    color: "0075ca"
+    description: "Documentation improvements"
+  
+  - name: "type: refactor"
+    color: "fbca04"
+    description: "Code refactoring"
+  
+  - name: "type: performance"
+    color: "ff6b6b"
+    description: "Performance improvements"
+  
+  - name: "type: security"
+    color: "ee0701"
+    description: "Security-related changes"
+  
+  - name: "type: test"
+    color: "1d76db"
+    description: "Testing improvements"
+
+  # Component Labels
+  - name: "component: frontend"
+    color: "61dafb"
+    description: "Frontend related"
+  
+  - name: "component: backend"
+    color: "3776ab"
+    description: "Backend related"
+  
+  - name: "component: ci-cd"
+    color: "2088ff"
+    description: "CI/CD pipeline"
+  
+  - name: "component: infrastructure"
+    color: "5319e7"
+    description: "Infrastructure and deployment"
+  
+  - name: "component: database"
+    color: "336791"
+    description: "Database related"
+
+  # Priority Labels
+  - name: "priority: critical"
+    color: "b60205"
+    description: "Critical priority - immediate attention required"
+  
+  - name: "priority: high"
+    color: "d93f0b"
+    description: "High priority"
+  
+  - name: "priority: medium"
+    color: "fbca04"
+    description: "Medium priority"
+  
+  - name: "priority: low"
+    color: "0e8a16"
+    description: "Low priority"
+
+  # Status Labels
+  - name: "status: in-progress"
+    color: "ededed"
+    description: "Work in progress"
+  
+  - name: "status: blocked"
+    color: "d73a4a"
+    description: "Blocked by dependencies"
+  
+  - name: "status: needs-review"
+    color: "fbca04"
+    description: "Needs code review"
+  
+  - name: "status: needs-testing"
+    color: "1d76db"
+    description: "Needs testing"
+  
+  - name: "status: ready-to-merge"
+    color: "0e8a16"
+    description: "Ready to be merged"
+
+  # Size Labels
+  - name: "size: XS"
+    color: "c2e0c6"
+    description: "Extra small change"
+  
+  - name: "size: S"
+    color: "7ae7c7"
+    description: "Small change"
+  
+  - name: "size: M"
+    color: "fef2c0"
+    description: "Medium change"
+  
+  - name: "size: L"
+    color: "f7c6c7"
+    description: "Large change"
+  
+  - name: "size: XL"
+    color: "ee0701"
+    description: "Extra large change"
+
+  # Special Labels
+  - name: "good first issue"
+    color: "7057ff"
+    description: "Good for newcomers"
+  
+  - name: "help wanted"
+    color: "008672"
+    description: "Extra attention is needed"
+  
+  - name: "breaking change"
+    color: "d73a4a"
+    description: "Breaking change"
+  
+  - name: "dependencies"
+    color: "0366d6"
+    description: "Dependency updates"
+  
+  - name: "duplicate"
+    color: "cfd3d7"
+    description: "Duplicate issue or PR"
+  
+  - name: "wontfix"
+    color: "ffffff"
+    description: "This will not be worked on"
+  
+  - name: "invalid"
+    color: "e4e669"
+    description: "Invalid issue"
+
+# Collaborators and Teams
+# teams:
+#   - name: core-team
+#     permission: admin
+#   
+#   - name: frontend-team
+#     permission: push
+#   
+#   - name: backend-team
+#     permission: push
+#   
+#   - name: release-managers
+#     permission: maintain
+
+# Milestones
+milestones:
+  - title: "v1.0.0 - MVP Release"
+    description: "Initial release with core features"
+    state: open
+  
+  - title: "v1.1.0 - Enhanced Features"
+    description: "Additional features and improvements"
+    state: open
+  
+  - title: "v2.0.0 - Major Update"
+    description: "Major version with breaking changes"
+    state: open
+
+# Made with Bob

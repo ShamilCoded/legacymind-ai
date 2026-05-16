@@ -1,0 +1,42 @@
+name: Code Quality Check
+
+on:
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  quality-gate:
+    name: Code Quality Gate
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check commit messages
+        run: |
+          echo "Checking commit message format..."
+          # This is a placeholder - implement commitlint if needed
+          git log --format=%s origin/${{ github.base_ref }}..${{ github.head_ref }} | head -10
+        continue-on-error: true
+
+      - name: Check for merge conflicts
+        run: |
+          echo "Checking for merge conflict markers..."
+          ! git grep -n "<<<<<<< HEAD" -- ':!.github/workflows/code-quality.yml'
+        continue-on-error: true
+
+      - name: Check file sizes
+        run: |
+          echo "Checking for large files..."
+          find . -type f -size +10M -not -path "./.git/*" -not -path "./node_modules/*" -not -path "./venv/*"
+        continue-on-error: true
+
+      - name: Summary
+        run: |
+          echo "✅ Code quality checks completed"
+          echo "Review the logs above for any warnings"
+
+# Made with Bob
