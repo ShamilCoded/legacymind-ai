@@ -114,6 +114,7 @@ jobs:
         with:
           status: ${{ job.status }}
           text: 'Staging deployment ${{ job.status }}'
-          webhook_url: ${{ secrets.SLACK_WEBHOOK }}
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
 # Made with Bob
