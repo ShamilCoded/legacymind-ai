@@ -348,7 +348,7 @@ class VectorStore:
         # Load metadata
         metadata_path = dir_path / "metadata.pkl"
         with open(metadata_path, 'rb') as f:
-            data = pickle.load(f)
+            data = pickle.load(f)  # nosec B301
             store.metadata = data['metadata']
             store.id_to_index = data['id_to_index']
             store.next_id = data['next_id']

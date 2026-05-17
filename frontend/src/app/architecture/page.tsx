@@ -194,7 +194,7 @@ export default function ArchitecturePage() {
                 No Graph Generated Yet
               </h3>
               <p className="text-gray-500">
-                Enter a directory path and click "Generate Graph" to visualize your codebase
+                Enter a directory path and click &quot;Generate Graph&quot; to visualize your codebase
                 architecture
               </p>
             </div>

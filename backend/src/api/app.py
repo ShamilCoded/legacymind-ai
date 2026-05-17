@@ -54,8 +54,9 @@ async def lifespan(app: FastAPI):
     # Load environment variables
     openai_api_key = os.getenv("OPENAI_API_KEY")
     anthropic_api_key = os.getenv("ANTHROPIC_API_KEY")
-    llm_provider = os.getenv("LLM_PROVIDER", "openai")
-    model_name = os.getenv("MODEL_NAME", "gpt-4-turbo-preview")
+    google_api_key = os.getenv("GOOGLE_API_KEY")
+    llm_provider = os.getenv("LLM_PROVIDER", "gemini")
+    model_name = os.getenv("MODEL_NAME", "gemini-1.5-flash")
     embedding_model = os.getenv("EMBEDDING_MODEL", "all-MiniLM-L6-v2")
     vector_store_path = os.getenv("VECTOR_STORE_PATH", "./vector_store_data")
     
@@ -74,7 +75,14 @@ async def lifespan(app: FastAPI):
         app_state["vector_store"] = VectorStore(dimension=dimension)
     
     # Initialize chatbot
-    api_key = openai_api_key if llm_provider == "openai" else anthropic_api_key
+    if llm_provider == "openai":
+        api_key = openai_api_key
+    elif llm_provider == "anthropic":
+        api_key = anthropic_api_key
+    elif llm_provider == "gemini":
+        api_key = google_api_key
+    else:
+        api_key = None
     logger.info(f"Initializing chatbot with {llm_provider}/{model_name}")
     app_state["chatbot"] = RAGChatbot(
         embedding_service=app_state["embedding_service"],
