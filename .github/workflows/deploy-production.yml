@@ -138,7 +138,8 @@ jobs:
             Production Deployment ${{ job.status }}
             Version: ${{ github.sha }}
             Deployed by: ${{ github.actor }}
-          webhook_url: ${{ secrets.SLACK_WEBHOOK }}
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
       - name: Create GitHub Release
         if: startsWith(github.ref, 'refs/tags/')
@@ -168,6 +169,7 @@ jobs:
         with:
           status: 'failure'
           text: 'Production deployment failed - rollback initiated'
-          webhook_url: ${{ secrets.SLACK_WEBHOOK }}
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
 # Made with Bob
